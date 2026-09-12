@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { cn } from "cn";
+import * as React from "react";
 import {
     Dialog as DialogPrimitive,
     DialogTrigger as DialogTriggerPrimitive,
@@ -50,8 +50,8 @@ function DialogOverlay({
         <ModalOverlayPrimitive
             data-slot="dialog-overlay"
             className={cn(
-                "fixed inset-0 isolate z-50 bg-black/80 duration-100 data-entering:animate-in data-entering:fade-in-0 data-exiting:animate-out data-exiting:fade-out-0 supports-backdrop-filter:backdrop-blur-xs",
-                className
+                "data-entering:animate-in data-entering:fade-in-0 data-exiting:animate-out data-exiting:fade-out-0 fixed inset-0 isolate z-50 bg-black/80 duration-100 supports-backdrop-filter:backdrop-blur-xs",
+                className,
             )}
             {...props}
         >
@@ -77,8 +77,8 @@ function Dialog({
             <ModalPrimitive
                 data-slot="dialog-content"
                 className={cn(
-                    "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-xs/relaxed text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 sm:max-w-sm",
-                    className
+                    "bg-popover text-popover-foreground ring-foreground/10 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl p-4 text-xs/relaxed ring-1 duration-100 outline-none sm:max-w-sm",
+                    className,
                 )}
             >
                 <DialogPrimitive
@@ -125,7 +125,7 @@ function DialogFooter({
             data-slot="dialog-footer"
             className={cn(
                 "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-                className
+                className,
             )}
             {...props}
         >
@@ -159,8 +159,8 @@ function DialogDescription({
         <div
             data-slot="dialog-description"
             className={cn(
-                "text-xs/relaxed text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
-                className
+                "text-muted-foreground *:[a]:hover:text-foreground text-xs/relaxed *:[a]:underline *:[a]:underline-offset-3",
+                className,
             )}
             {...props}
         />
@@ -168,8 +168,6 @@ function DialogDescription({
 }
 
 export {
-    type DialogPrimitiveProps,
-    type DialogTriggerPrimitiveProps,
     Dialog,
     DialogClose,
     DialogDescription,
@@ -178,4 +176,6 @@ export {
     DialogOverlay,
     DialogTitle,
     DialogTrigger,
+    type DialogPrimitiveProps,
+    type DialogTriggerPrimitiveProps,
 };
