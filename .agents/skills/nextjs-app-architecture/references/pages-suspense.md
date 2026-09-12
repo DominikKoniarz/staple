@@ -16,30 +16,35 @@ Pages in `app/` import feature components and place `<Suspense>` boundaries. The
 Type page and layout functions with the auto-generated `PageProps<'/route'>` / `LayoutProps<'/route'>` helpers — no import, regenerated on `next dev` / `next build` / `next typegen`. See [route type helpers](https://preview.nextjs.org/docs/app/api-reference/config/typescript#route-type-helpers).
 
 ```tsx
-export default function PostPage({ params }: PageProps<'/post/[id]'>) { /* ... */ }
+export default function PostPage({ params }: PageProps<"/post/[id]">) {
+    /* ... */
+}
 ```
 
-Don't hand-write `{ params: Promise<{ id: string }> }` — the generated types stay in sync with the route (catch-all, optional segments). Route handlers use `RouteContext<'/api/...'>`. `typedRoutes: true` is a *separate* feature (statically-typed `href`s), not the source of these helpers.
+Don't hand-write `{ params: Promise<{ id: string }> }` — the generated types stay in sync with the route (catch-all, optional segments). Route handlers use `RouteContext<'/api/...'>`. `typedRoutes: true` is a _separate_ feature (statically-typed `href`s), not the source of these helpers.
 
 ## Keep pages synchronous
 
 Use `params.then()` instead of `await params`. Content above the `.then()` pre-renders into the static shell; content inside it suspends.
 
 ```tsx
-import { Suspense } from 'react';
-import { PostDetail, PostDetailSkeleton } from '@/features/post/components/post-detail';
+import { Suspense } from "react";
+import {
+    PostDetail,
+    PostDetailSkeleton,
+} from "@/features/post/components/post-detail";
 
-export default function PostPage({ params }: PageProps<'/post/[id]'>) {
-  return (
-    <div>
-      <h1>Post</h1>
-      <Suspense fallback={<PostDetailSkeleton />}>
-        {params.then(({ id }) => (
-          <PostDetail id={id} />
-        ))}
-      </Suspense>
-    </div>
-  );
+export default function PostPage({ params }: PageProps<"/post/[id]">) {
+    return (
+        <div>
+            <h1>Post</h1>
+            <Suspense fallback={<PostDetailSkeleton />}>
+                {params.then(({ id }) => (
+                    <PostDetail id={id} />
+                ))}
+            </Suspense>
+        </div>
+    );
 }
 ```
 
@@ -55,18 +60,21 @@ Use an implicit-return arrow function when the callback just renders JSX — e.g
 
 ```tsx
 // searchParams only
-export default function SearchPage({ searchParams }: PageProps<'/search'>) {
-  return searchParams.then(sp => {
-    const q = typeof sp.q === 'string' ? sp.q : '';
-    return q ? <SearchResults query={q} /> : <EmptyState />;
-  });
+export default function SearchPage({ searchParams }: PageProps<"/search">) {
+    return searchParams.then((sp) => {
+        const q = typeof sp.q === "string" ? sp.q : "";
+        return q ? <SearchResults query={q} /> : <EmptyState />;
+    });
 }
 
 // Both params and searchParams
-export default function ProfilePage({ params, searchParams }: PageProps<'/u/[handle]'>) {
-  return Promise.all([params, searchParams]).then(([{ handle }, sp]) => (
-    <ProfileFeed handle={handle} tab={parseTab(sp.tab)} />
-  ));
+export default function ProfilePage({
+    params,
+    searchParams,
+}: PageProps<"/u/[handle]">) {
+    return Promise.all([params, searchParams]).then(([{ handle }, sp]) => (
+        <ProfileFeed handle={handle} tab={parseTab(sp.tab)} />
+    ));
 }
 ```
 
@@ -95,16 +103,16 @@ export function PostDetailSkeleton() { ... }
 ```tsx
 // app/post/[id]/page.tsx
 <Suspense fallback={<PostDetailSkeleton />}>
-  {params.then(({ id }) => (
-    <>
-      <PostDetail id={id} />
-      <ErrorBoundary title="Replies didn't load">
-        <Suspense fallback={<RepliesSkeleton />}>
-          <Replies postId={id} />
-        </Suspense>
-      </ErrorBoundary>
-    </>
-  ))}
+    {params.then(({ id }) => (
+        <>
+            <PostDetail id={id} />
+            <ErrorBoundary title="Replies didn't load">
+                <Suspense fallback={<RepliesSkeleton />}>
+                    <Replies postId={id} />
+                </Suspense>
+            </ErrorBoundary>
+        </>
+    ))}
 </Suspense>
 ```
 
@@ -120,11 +128,11 @@ Before designing a fallback, identify what is stable and what is data-dependent.
 
 ```tsx
 <FeaturePanel>
-  <Suspense fallback={<FeaturePanelBodySkeleton />}>
-    <Crossfade>
-      <FeaturePanelBody id={id} />
-    </Crossfade>
-  </Suspense>
+    <Suspense fallback={<FeaturePanelBodySkeleton />}>
+        <Crossfade>
+            <FeaturePanelBody id={id} />
+        </Crossfade>
+    </Suspense>
 </FeaturePanel>
 ```
 
@@ -150,17 +158,17 @@ Small inline helpers are fine when their only job is route control flow that mus
 
 ```tsx
 export default function LoginPage() {
-  return (
-    <Suspense>
-      <LoginRedirect />
-    </Suspense>
-  );
+    return (
+        <Suspense>
+            <LoginRedirect />
+        </Suspense>
+    );
 }
 
 async function LoginRedirect() {
-  await connection();
-  await redirectIfAuthenticated('/dashboard');
-  return <LoginForm />;
+    await connection();
+    await redirectIfAuthenticated("/dashboard");
+    return <LoginForm />;
 }
 ```
 
@@ -173,26 +181,26 @@ Avoid components whose only job is to group boundary content, like `HomeLists` o
 ```tsx
 // Wrong — hides the structure behind a wrapper
 <Suspense fallback={<HomeListsSkeleton />}>
-  <HomeLists searchParams={searchParams} />
+    <HomeLists searchParams={searchParams} />
 </Suspense>
 ```
 
 ```tsx
 // Right — structure visible at the page level
 <Suspense
-  fallback={
-    <>
-      <FeaturedSkeleton />
-      <RecentSkeleton />
-    </>
-  }
+    fallback={
+        <>
+            <FeaturedSkeleton />
+            <RecentSkeleton />
+        </>
+    }
 >
-  {searchParams.then(sp => (
-    <>
-      <Featured filter={sp.filter} />
-      <Recent filter={sp.filter} />
-    </>
-  ))}
+    {searchParams.then((sp) => (
+        <>
+            <Featured filter={sp.filter} />
+            <Recent filter={sp.filter} />
+        </>
+    ))}
 </Suspense>
 ```
 
@@ -216,9 +224,9 @@ Wrap fallible sections in a Next.js-aware error boundary so one failure doesn't 
 
 ```tsx
 <ErrorBoundary title="Replies didn't load">
-  <Suspense fallback={<RepliesSkeleton />}>
-    <Replies postId={id} />
-  </Suspense>
+    <Suspense fallback={<RepliesSkeleton />}>
+        <Replies postId={id} />
+    </Suspense>
 </ErrorBoundary>
 ```
 
@@ -231,17 +239,17 @@ Pair component-level boundaries with route-segment [`error.tsx`](https://preview
 Layouts compose feature components the same way pages do. Use `<Suspense>` for slots that fetch data (auth badge, sidebar):
 
 ```tsx
-export default function RootLayout({ children }: LayoutProps<'/'>) {
-  return (
-    <html>
-      <body>
-        <Suspense>
-          <AuthGate userPromise={getCurrentUser()} />
-        </Suspense>
-        <main>{children}</main>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: LayoutProps<"/">) {
+    return (
+        <html>
+            <body>
+                <Suspense>
+                    <AuthGate userPromise={getCurrentUser()} />
+                </Suspense>
+                <main>{children}</main>
+            </body>
+        </html>
+    );
 }
 ```
 

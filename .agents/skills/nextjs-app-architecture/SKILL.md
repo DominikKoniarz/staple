@@ -3,8 +3,8 @@ name: nextjs-app-architecture
 description: Build or audit Next.js 16 App Router apps using a next-beats-style React Server Components architecture. Use when scaffolding a new app, adding a feature, reviewing an existing app, refactoring route-loader-shaped pages into feature-owned async server components, deciding where queries/actions/components live, keeping pages synchronous with `params.then()`, placing Suspense boundaries, choosing the client/server boundary, designing skeletons, preventing CLS, or enabling Cache Components. Also use when the user asks about RSC composition, components receiving IDs instead of route params, `'use cache'`, `cacheTag`, `updateTag`, static-shell prerendering, or making an app easier for AI agents to modify.
 license: MIT
 metadata:
-  author: aurorascharff
-  version: "1.3.9"
+    author: aurorascharff
+    version: "1.3.9"
 ---
 
 # Next.js App Architecture
@@ -48,10 +48,10 @@ The non-negotiables. The workflow produces them; the final check verifies them.
 Run these in order for build-from-scratch, feature work, or audits. Each step names the reference to consult and the check it must pass.
 
 1. **Choose mode.**
-   - **Build from scratch:** sketch routes, real domain nouns, static shell, and expected loading groups before writing code.
-   - **Audit/refactor:** scan current `app/` pages first; list every async page, page-level query import, route prop leak, missing Suspense boundary, and feature folder mismatch.
-     → `references/example.md` for the target shape; `references/feature-folders.md` for placement.
-     ✓ You know whether you are creating the architecture or converting loader-shaped code into it.
+    - **Build from scratch:** sketch routes, real domain nouns, static shell, and expected loading groups before writing code.
+    - **Audit/refactor:** scan current `app/` pages first; list every async page, page-level query import, route prop leak, missing Suspense boundary, and feature folder mismatch.
+      → `references/example.md` for the target shape; `references/feature-folders.md` for placement.
+      ✓ You know whether you are creating the architecture or converting loader-shaped code into it.
 2. **Place the work.** Decide the feature folder before writing anything.
    → `references/feature-folders.md` (decision tree + merge rules).
    ✓ A real domain, a cross-domain product experience, or folded into the right parent.

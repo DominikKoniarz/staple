@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
-        "types:check": "tsc --noEmit --incremental false"
+        "types:check": "tsc --noEmit --incremental false",
+        "format": "prettier --write . --config prettier.config.json"
     },
     "dependencies": {
         "next": "16.3.5",

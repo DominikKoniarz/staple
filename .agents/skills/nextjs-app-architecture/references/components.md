@@ -13,9 +13,9 @@ Prefer minimal, stable props: IDs, slugs, handles, parsed filters, or records th
 import { getUnreadNotificationCount } from "@/features/notifications/notifications-queries";
 
 export async function NotificationsBadge() {
-  const count = await getUnreadNotificationCount();
-  if (count === 0) return null;
-  return <span aria-label={`${count} unread`}>{count}</span>;
+    const count = await getUnreadNotificationCount();
+    if (count === 0) return null;
+    return <span aria-label={`${count} unread`}>{count}</span>;
 }
 ```
 
@@ -26,17 +26,17 @@ For parameterized routes, the page resolves `params` and the feature receives an
 ```tsx
 // app/post/[id]/page.tsx
 <Suspense fallback={<PostDetailSkeleton />}>
-  {params.then(({ id }) => (
-    <PostDetail id={id} />
-  ))}
+    {params.then(({ id }) => (
+        <PostDetail id={id} />
+    ))}
 </Suspense>
 ```
 
 ```tsx
 // features/post/components/post-detail.tsx
 export async function PostDetail({ id }: { id: string }) {
-  const post = await getPost(id);
-  return <article>{post.body}</article>;
+    const post = await getPost(id);
+    return <article>{post.body}</article>;
 }
 ```
 
@@ -46,26 +46,26 @@ Export the main component and its skeleton from the same file. Pages import both
 
 ```tsx
 export async function Feed({ userId }: { userId: string }) {
-  const posts = await getFeed(userId);
-  return (
-    <ul>
-      {posts.map((p) => (
-        <Post key={p.id} post={p} />
-      ))}
-    </ul>
-  );
+    const posts = await getFeed(userId);
+    return (
+        <ul>
+            {posts.map((p) => (
+                <Post key={p.id} post={p} />
+            ))}
+        </ul>
+    );
 }
 
 export function FeedSkeleton() {
-  return (
-    <ul>
-      {Array.from({ length: 3 }).map((_, i) => (
-        <li key={i}>
-          <Skeleton className="h-24" />
-        </li>
-      ))}
-    </ul>
-  );
+    return (
+        <ul>
+            {Array.from({ length: 3 }).map((_, i) => (
+                <li key={i}>
+                    <Skeleton className="h-24" />
+                </li>
+            ))}
+        </ul>
+    );
 }
 ```
 
@@ -74,7 +74,7 @@ Don't export a second skeleton whose whole job is to rename or preconfigure anot
 ```tsx
 // Wrong — alias wrapper adds an import surface but no behavior
 export function CompactGridSkeleton() {
-  return <GridSkeleton dense />;
+    return <GridSkeleton dense />;
 }
 ```
 
@@ -130,16 +130,16 @@ If the component needs interactive pieces, keep the server component as the pare
 
 ```tsx
 async function PostDetail({ id }: { id: string }) {
-  const [post, userState] = await Promise.all([
-    getPost(id),
-    getPostUserState(id),
-  ]);
-  return (
-    <article>
-      <PostBody body={post.body} />
-      <PostActions userState={userState} /> {/* 'use client' leaf */}
-    </article>
-  );
+    const [post, userState] = await Promise.all([
+        getPost(id),
+        getPostUserState(id),
+    ]);
+    return (
+        <article>
+            <PostBody body={post.body} />
+            <PostActions userState={userState} /> {/* 'use client' leaf */}
+        </article>
+    );
 }
 ```
 
@@ -149,11 +149,11 @@ Composition crosses the boundary. A client component can accept server-rendered 
 
 ```tsx
 <ComposerForm
-  avatar={
-    <Suspense fallback={<AvatarSkeleton />}>
-      <CurrentUserAvatar />
-    </Suspense>
-  }
+    avatar={
+        <Suspense fallback={<AvatarSkeleton />}>
+            <CurrentUserAvatar />
+        </Suspense>
+    }
 />
 ```
 
@@ -166,20 +166,20 @@ Prefer passing plain values (strings, IDs, resolved data) to a server child. A s
 ```tsx
 // Right — parent fetches the list, passes each item
 async function Feed({ userId }: { userId: string }) {
-  const posts = await getFeed(userId);
-  return posts.map((post) => <Post key={post.id} post={post} />);
+    const posts = await getFeed(userId);
+    return posts.map((post) => <Post key={post.id} post={post} />);
 }
 
 async function Post({ post }: { post: Post }) {
-  return <article>{post.body}</article>;
+    return <article>{post.body}</article>;
 }
 ```
 
 ```tsx
 // Wrong — child refetches what the parent already had
 async function Post({ id }: { id: string }) {
-  const post = await getPost(id);
-  return <article>{post.body}</article>;
+    const post = await getPost(id);
+    return <article>{post.body}</article>;
 }
 ```
 
@@ -190,7 +190,7 @@ When a client component needs server data but should manage its own loading (a s
 ```tsx
 // page: pass the unresolved promise, wrap in Suspense
 <Suspense fallback={<TagListSkeleton />}>
-  <TagPicker itemsPromise={getTags()} />
+    <TagPicker itemsPromise={getTags()} />
 </Suspense>
 ```
 
@@ -199,8 +199,8 @@ When a client component needs server data but should manage its own loading (a s
 import { use } from "react";
 
 export function TagPicker({ itemsPromise }: { itemsPromise: Promise<Tag[]> }) {
-  const items = use(itemsPromise);
-  // render interactive UI from items
+    const items = use(itemsPromise);
+    // render interactive UI from items
 }
 ```
 
@@ -225,7 +225,7 @@ Avoid effects whose only job is to copy React state to React state:
 ```tsx
 // Wrong — derived React state cascades through an effect
 useEffect(() => {
-  setSelectedItem(null);
+    setSelectedItem(null);
 }, [filterKey]);
 ```
 
