@@ -10,7 +10,9 @@
         "lint": "eslint",
         "types:check": "tsc --noEmit --incremental false",
         "format": "prettier --write . --config prettier.config.json",
-        "auth:generate": "bun x auth@latest generate --config ./lib/auth.ts --output ./lib/db/auth-schema.ts -y"
+        "auth:generate": "bun x auth@latest generate --config ./lib/auth.ts --output ./lib/db/auth-schema.ts -y",
+        "compose:up": "docker compose up -d",
+        "compose:down": "docker compose down"
     },
     "dependencies": {
         "@better-auth/drizzle-adapter": "1.7.4",
