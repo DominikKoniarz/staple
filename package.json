@@ -5,16 +5,23 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "b": "next build",
         "start": "next start",
         "lint": "eslint",
         "types:check": "tsc --noEmit --incremental false",
-        "format": "prettier --write . --config prettier.config.json"
+        "format": "prettier --write . --config prettier.config.json",
+        "auth:generate": "bun x auth@latest generate --config ./lib/auth.ts --output ./lib/db/auth-schema.ts -y"
     },
     "dependencies": {
+        "@better-auth/drizzle-adapter": "1.7.4",
         "@remixicon/react": "4.9.0",
+        "@t3-oss/env-core": "0.13.11",
+        "better-auth": "1.7.4",
         "class-variance-authority": "0.7.1",
         "cn": "0.3.0",
+        "drizzle-orm": "1.0.0-rc.4",
         "next": "16.3.5",
+        "pg": "8.23.0",
         "react": "19.2.8",
         "react-aria-components": "1.21.1",
         "react-dom": "19.2.8",
@@ -24,14 +31,16 @@
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
         "@types/node": "^20",
+        "@types/pg": "8.23.1",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "babel-plugin-react-compiler": "1.0.0",
+        "drizzle-kit": "1.0.0-rc.4",
         "eslint": "^9",
         "eslint-config-next": "16.3.5",
-        "tailwindcss": "^4",
         "prettier-plugin-organize-imports": "^4.3.0",
         "prettier-plugin-tailwindcss": "^0.8.1",
+        "tailwindcss": "^4",
         "typescript": "5.9.3"
     },
     "packageManager": "bun@1.4.2",
