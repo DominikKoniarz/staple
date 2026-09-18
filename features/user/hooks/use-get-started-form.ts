@@ -2,11 +2,11 @@ import { getStartedSchema } from "@/features/user/user-schema";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import type { Route } from "next";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const useGetStartedForm = () => {
-    const router = useRouter();
+    const [magicLinkSent, setMagicLinkSent] = useState(false);
 
     const form = useForm({
         defaultValues: {
@@ -26,14 +26,19 @@ const useGetStartedForm = () => {
                         );
                     },
                     onSuccess() {
-                        router.push("/app");
+                        setMagicLinkSent(true);
                     },
                 },
             });
         },
     });
 
-    return { form };
+    const reset = () => {
+        form.reset({ email: "" });
+        setMagicLinkSent(false);
+    };
+
+    return { form, magicLinkSent, reset };
 };
 
 export default useGetStartedForm;
