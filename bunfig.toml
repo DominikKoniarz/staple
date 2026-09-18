@@ -1,2 +1,4 @@
+preload = ["zod/compile"]
+
 [install]
 exact = true

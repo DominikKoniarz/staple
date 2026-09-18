@@ -1,5 +1,5 @@
 import { createEnv } from "@t3-oss/env-core";
-import { z } from "zod/mini";
+import { z } from "@zod/mini";
 
 export const env = createEnv({
     clientPrefix: "NEXT_PUBLIC_",
