@@ -2,7 +2,7 @@ import { getStartedSchema } from "@/features/user/user-schema";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import type { Route } from "next";
-import { useState } from "react";
+import { addTransitionType, startTransition, useState } from "react";
 import { toast } from "sonner";
 
 const useGetStartedForm = () => {
@@ -26,7 +26,10 @@ const useGetStartedForm = () => {
                         );
                     },
                     onSuccess() {
-                        setMagicLinkSent(true);
+                        startTransition(() => {
+                            addTransitionType("nav-forward");
+                            setMagicLinkSent(true);
+                        });
                     },
                 },
             });
@@ -35,7 +38,11 @@ const useGetStartedForm = () => {
 
     const reset = () => {
         form.reset({ email: "" });
-        setMagicLinkSent(false);
+
+        startTransition(() => {
+            addTransitionType("nav-back");
+            setMagicLinkSent(false);
+        });
     };
 
     return { form, magicLinkSent, reset };

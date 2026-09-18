@@ -1,5 +1,6 @@
 "use client";
 
+import { NavBack, NavForward } from "@/components/ui/animations";
 import { Button } from "@/components/ui/button";
 import {
     Field,
@@ -16,9 +17,25 @@ export default function GetStartedForm() {
     const { form, magicLinkSent, reset } = useGetStartedForm();
 
     if (magicLinkSent) {
-        return <GetStartedFormSuccess resetForm={reset} />;
+        return (
+            <NavForward>
+                <GetStartedFormSuccess resetForm={reset} />
+            </NavForward>
+        );
     }
 
+    return (
+        <NavBack>
+            <GetStartedFormContent form={form} />
+        </NavBack>
+    );
+}
+
+function GetStartedFormContent({
+    form,
+}: {
+    form: ReturnType<typeof useGetStartedForm>["form"];
+}) {
     return (
         <div className="w-full max-w-xs space-y-6 pb-2 sm:pb-6">
             <h1 className="w-full text-center text-3xl font-bold">
@@ -90,11 +107,7 @@ export default function GetStartedForm() {
     );
 }
 
-export function GetStartedFormSuccess({
-    resetForm,
-}: {
-    resetForm: () => void;
-}) {
+function GetStartedFormSuccess({ resetForm }: { resetForm: () => void }) {
     return (
         <div className="w-full max-w-xs space-y-6 pb-2 sm:pb-6">
             <h1 className="w-full text-center text-3xl font-bold">
