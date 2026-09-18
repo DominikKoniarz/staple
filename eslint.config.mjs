@@ -13,6 +13,12 @@ const eslintConfig = defineConfig([
         "build/**",
         "next-env.d.ts",
     ]),
+    {
+        rules: {
+            // TanStack Form Field uses children as a render prop.
+            "react/no-children-prop": ["error", { allowFunctions: true }],
+        },
+    },
 ]);
 
 export default eslintConfig;

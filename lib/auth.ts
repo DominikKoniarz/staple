@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import * as schema from "@/lib/db/auth-schema";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
 import { betterAuth } from "better-auth/minimal";
+import { magicLink } from "better-auth/plugins";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -19,4 +20,12 @@ export const auth = betterAuth({
             maxAge: 30, // 30 seconds
         },
     },
+    plugins: [
+        magicLink({
+            sendMagicLink: async ({ email, token, url }) => {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                console.log(email, token, url);
+            },
+        }),
+    ],
 });
