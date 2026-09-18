@@ -11,6 +11,7 @@ export const auth = betterAuth({
     }),
     advanced: {
         database: {
+            generateId: () => Bun.randomUUIDv7(),
             joins: true,
         },
     },

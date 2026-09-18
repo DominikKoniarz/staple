@@ -3,10 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "b": "next build",
-        "start": "next start",
+        "dev": "bun --bun next dev",
+        "build": "bun --bun next build",
+        "b": "bun --bun next build",
+        "start": "bun --bun next start",
         "lint": "eslint",
         "types:check": "tsc --noEmit --incremental false",
         "format": "prettier --write . --config prettier.config.json",
@@ -39,6 +39,7 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
+        "@types/bun": "1.4.2",
         "@types/node": "^20",
         "@types/pg": "8.23.1",
         "@types/react": "^19",
