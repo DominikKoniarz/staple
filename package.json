@@ -11,6 +11,9 @@
         "types:check": "tsc --noEmit --incremental false",
         "format": "prettier --write . --config prettier.config.json",
         "auth:generate": "bun x auth@latest generate --config ./lib/auth.ts --output ./lib/db/auth-schema.ts -y",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "db:studio": "drizzle-kit studio",
         "compose:up": "docker compose up -d",
         "compose:down": "docker compose down"
     },
