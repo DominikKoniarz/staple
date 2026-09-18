@@ -120,10 +120,16 @@ function GetStartedFormSuccess({ resetForm }: { resetForm: () => void }) {
             <Button
                 type="button"
                 variant="outline"
-                className="mx-auto flex items-center gap-1"
+                className="bg-background hover:bg-background relative isolate mx-auto block overflow-hidden"
                 onClick={resetForm}
             >
-                <RiArrowLeftSFill /> Try with a different email
+                <span className="relative z-10 flex items-center gap-1 text-white mix-blend-difference">
+                    <RiArrowLeftSFill /> Try with a different email
+                </span>
+                <span
+                    aria-hidden
+                    className="bg-foreground absolute inset-y-0 -left-4 z-0 w-[calc(100%+2rem)] translate-x-full -skew-x-45 transition-transform duration-500 ease-in-out group-hover/button:translate-x-0 group-hover/button:skew-x-0"
+                />
             </Button>
         </div>
     );
