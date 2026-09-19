@@ -128,7 +128,7 @@ function GetStartedFormSuccess({ resetForm }: { resetForm: () => void }) {
                 </span>
                 <span
                     aria-hidden
-                    className="bg-foreground absolute inset-y-0 -left-4 z-0 w-[calc(100%+2rem)] translate-x-full -skew-x-45 transition-transform duration-500 ease-in-out group-hover/button:translate-x-0 group-hover/button:skew-x-0"
+                    className="bg-foreground absolute inset-y-0 -left-4 z-0 w-[calc(100%+2rem)] translate-x-full -skew-x-45 transition-transform duration-350 ease-in-out group-hover/button:translate-x-0 group-hover/button:skew-x-0"
                 />
             </Button>
         </div>

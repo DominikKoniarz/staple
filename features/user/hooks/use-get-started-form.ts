@@ -16,23 +16,23 @@ const useGetStartedForm = () => {
             onSubmit: getStartedSchema,
         },
         onSubmit: async ({ value }) => {
-            await authClient.signIn.magicLink({
+            const { error } = await authClient.signIn.magicLink({
                 email: value.email,
                 callbackURL: "/app" satisfies Route,
-                fetchOptions: {
-                    onError() {
-                        toast.error(
-                            "Something went wrong. Please try again later.",
-                        );
-                    },
-                    onSuccess() {
-                        startTransition(() => {
-                            addTransitionType("nav-forward");
-                            setMagicLinkSent(true);
-                        });
-                    },
-                },
             });
+
+            if (error) {
+                toast.error(
+                    error.status === 429
+                        ? "Slow down! Try again in a minute."
+                        : "Something went wrong. Please try again later.",
+                );
+            } else {
+                startTransition(() => {
+                    addTransitionType("nav-forward");
+                    setMagicLinkSent(true);
+                });
+            }
         },
     });
 

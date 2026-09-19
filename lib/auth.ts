@@ -21,6 +21,9 @@ export const auth = betterAuth({
             maxAge: 30, // 30 seconds
         },
     },
+    rateLimit: {
+        enabled: true,
+    },
     plugins: [
         magicLink({
             sendMagicLink: async ({ email, token, url }) => {
