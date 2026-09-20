@@ -1,6 +1,6 @@
 import { defineRelationsPart } from "drizzle-orm";
 import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { timestamps } from "./schema";
+import { timestamps } from "./columns";
 
 export const user = pgTable("user", {
     id: text("id").primaryKey(),
