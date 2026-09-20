@@ -17,7 +17,7 @@ export const auth = betterAuth({
     },
     session: {
         cookieCache: {
-            enabled: false,
+            enabled: true,
             maxAge: 30, // 30 seconds
         },
     },
@@ -27,7 +27,7 @@ export const auth = betterAuth({
     plugins: [
         magicLink({
             sendMagicLink: async ({ email, token, url }) => {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+                await new Promise((resolve) => setTimeout(resolve, 750));
                 console.log(email, token, url);
             },
         }),
