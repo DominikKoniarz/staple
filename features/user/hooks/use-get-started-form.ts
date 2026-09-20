@@ -2,7 +2,13 @@ import { getStartedSchema } from "@/features/user/user-schema";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import type { Route } from "next";
-import { addTransitionType, startTransition, useState } from "react";
+import {
+    addTransitionType,
+    startTransition,
+    useEffectEvent,
+    useLayoutEffect,
+    useState,
+} from "react";
 import { toast } from "sonner";
 
 const useGetStartedForm = () => {
@@ -44,6 +50,16 @@ const useGetStartedForm = () => {
             setMagicLinkSent(false);
         });
     };
+
+    const cleanUp = useEffectEvent(() => {
+        setMagicLinkSent(false);
+    });
+
+    useLayoutEffect(() => {
+        return () => {
+            cleanUp();
+        };
+    }, []);
 
     return { form, magicLinkSent, reset };
 };

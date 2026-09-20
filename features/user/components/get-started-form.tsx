@@ -11,9 +11,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import useGetStartedForm from "@/features/user/hooks/use-get-started-form";
+import useRedirectLogged from "@/features/user/hooks/use-redirect-logged";
 import { RiArrowLeftSFill, RiLoader3Line } from "@remixicon/react";
+import type { User } from "better-auth";
+import { use } from "react";
 
-export default function GetStartedForm() {
+type Props = {
+    userPromise: Promise<User | null>;
+};
+
+export default function GetStartedForm({ userPromise }: Props) {
+    const user = use(userPromise);
+
+    useRedirectLogged(user);
+
     const { form, magicLinkSent, reset } = useGetStartedForm();
 
     if (magicLinkSent) {
@@ -137,20 +148,18 @@ function GetStartedFormSuccess({ resetForm }: { resetForm: () => void }) {
 
 export function GetStartedFormSkeleton() {
     return (
-        <div className="bg-background grid flex-1 place-items-center p-6">
-            <div className="w-full max-w-xs space-y-6 pb-2 sm:pb-6">
-                <div className="mb-6 flex flex-col items-center justify-center gap-2">
-                    <Skeleton className="h-8 w-4/5" />
-                    <Skeleton className="h-8 w-2/5" />
-                </div>
-                <Skeleton className="mx-auto mb-6 h-6 w-2/3" />
-                <div className="w-full space-y-6">
-                    <div className="flex flex-col gap-2">
-                        <Skeleton className="h-[16.5px] w-8" />
-                        <Skeleton className="h-8 w-full" />
-                    </div>
+        <div className="w-full max-w-xs space-y-6 pb-2 sm:pb-6">
+            <div className="mb-6 flex flex-col items-center justify-center gap-2">
+                <Skeleton className="h-8 w-4/5" />
+                <Skeleton className="h-8 w-2/5" />
+            </div>
+            <Skeleton className="mx-auto mb-6 h-6 w-2/3" />
+            <div className="w-full space-y-6">
+                <div className="flex flex-col gap-2">
+                    <Skeleton className="h-[16.5px] w-8" />
                     <Skeleton className="h-8 w-full" />
                 </div>
+                <Skeleton className="h-8 w-full" />
             </div>
         </div>
     );
